@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Referral Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #c58ee0, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #dc2430;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #b71c1c;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 15px;
+      color: #555;
+    }
+
+    .link a {
+      color:#c58ee0,;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .error {
+      color: red;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Sign Up</h2>
+
+    <div class="error" id="errorBox" style="display: none;"></div>
+
+
+   <form id="signupForm">
+  <input type="text" id="name" placeholder="Your Name" required>
+  <input type="email" id="email" placeholder="Email Address" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button type="submit">Sign Up</button>
+</form>
+
+
+    <div class="link">
+      Already have an account? <a href="/login">Login</a>
+    </div>
+  </div>
+<script>
+  const form = document.getElementById('signupForm');
+  const errorBox = document.getElementById('errorBox');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Stop default form submit
+
+    const userData = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      password: document.getElementById('password').value.trim()
+    };
+
+    fetch("https://your-backend-name.onrender.com/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = "/login"; // Redirect to login page
+      } else {
+        errorBox.style.display = "block";
+        errorBox.textContent = "❌ " + data.message;
+      }
+    })
+    .catch(err => {
+      errorBox.style.display = "block";
+      errorBox.textContent = "❌ Something went wrong. Try again.";
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+

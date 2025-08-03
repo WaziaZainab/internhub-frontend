@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InternHub Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ece9e6, #ffffff);
+      margin: 0;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 220px;
+      height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      padding-top: 30px;
+    }
+    .sidebar h3 {
+      text-align: center;
+      color: #5d5dff;
+      margin-bottom: 30px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 30px;
+      text-decoration: none;
+      color: #333;
+      transition: 0.3s;
+    }
+    .sidebar a:hover {
+      background-color: #f0f0ff;
+      color: #5d5dff;
+    }
+    .content {
+      margin-left: 240px;
+      padding: 40px;
+    }
+    .navbar {
+      background-color: #fff;
+      padding: 15px 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .referral-box {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .referral-box input {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      width: 100%;
+      color: white;
+    }
+    .referral-box button {
+      margin-left: 10px;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    table {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    th {
+      background: #f5f5f5;
+    }
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      flex: 1;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .leaderboard {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h3>InternHub</h3>
+    <a href="#"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="#"><i class="fas fa-link"></i> Referral</a>
+    <a href="#"><i class="fas fa-tasks"></i> Tasks</a>
+    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+
+  </div>
+
+  <div class="content">
+    <div class="navbar">
+      <h4>Welcome, <strong>{{ user['name'] }}</strong></h4>
+    </div>
+
+    <!-- Referral Box -->
+    <div class="referral-box">
+      <div style="flex: 1;">
+        <h5>Your Referral Link</h5>
+        <input type="text" readonly value="{{ referral_link }}">
+      </div>
+      <button class="btn btn-light">Copy</button>
+
+    </div>
+
+    <!-- Referral Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <h5>Total Referrals</h5>
+        <h3>12</h3>
+      </div>
+      <div class="stat-card">
+        <h5>Joined Users</h5>
+        <h3>8</h3>
+      </div>
+      <div class="stat-card">
+        <h5>Referral Earnings</h5>
+        <h3>₹3200</h3>
+      </div>
+    </div>
+
+    <!-- Internship Cards -->
+    <h4>Available Internships</h4>
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>Google Internship</h5>
+          <p>Earn ₹500 per referral</p>
+          <button class="btn btn-primary btn-sm">Refer</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>Amazon Internship</h5>
+          <p>Earn ₹700 per referral</p>
+          <button class="btn btn-primary btn-sm">Refer</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>Flipkart Internship</h5>
+          <p>Earn ₹400 per referral</p>
+          <button class="btn btn-primary btn-sm">Refer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Referred Users Table -->
+    <h4>Referred Users</h4>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Referral Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Rahul Kumar</td>
+            <td>rahul@example.com</td>
+            <td>2 Aug 2025</td>
+            <td><span class="badge bg-success">Joined</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Sana Sheikh</td>
+            <td>sana@example.com</td>
+            <td>3 Aug 2025</td>
+            <td><span class="badge bg-warning text-dark">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="leaderboard mt-4">
+      <h4>Top Referrers</h4>
+      <table class="table table-striped mt-3">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Referrals</th>
+            <th>Earnings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Zara Khan</td>
+            <td>18</td>
+            <td>₹7200</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Ayush Mehta</td>
+            <td>14</td>
+            <td>₹5600</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Kiran Verma</td>
+            <td>11</td>
+            <td>₹4400</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+<script>
+  document.querySelector('.referral-box button').addEventListener('click', function () {
+    const input = document.querySelector('.referral-box input');
+    input.select();
+    document.execCommand('copy');
+    alert('Referral link copied!');
+  });
+</script>
+
+</body>
+</html>
+
+
