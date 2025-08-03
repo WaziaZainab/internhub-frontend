@@ -1,0 +1,99 @@
+# templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>InternHub - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .hero { background: linear-gradient(to right, #667eea, #764ba2); }
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 3rem;
+      border-radius: 1.5rem;
+    }
+    
+  </style>
+</head>
+<body class="text-white">
+  <section class="hero min-h-screen flex flex-col items-center justify-center text-center px-6">
+    <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-bounce">Welcome to InternHub 🚀</h1>
+    <p class="text-lg md:text-xl max-w-xl mb-8">Your gateway to smart referrals, internship tracking, and rewards!</p>
+    <div class="space-x-4">
+      <a href="/signup" class="bg-white text-purple-600 px-6 py-3 rounded-full font-semibold hover:bg-purple-200 transition">Sign Up</a>
+      <a href="/login" class="bg-transparent border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-purple-700 transition">Login</a>
+    </div>
+
+    <div class="mt-16 w-full max-w-4xl">
+
+  
+
+    <!-- Navigation Links -->
+   
+    </div>
+
+    <!-- Popular Internship Schemes -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-purple-700 mb-6">🎯 Popular Internship Schemes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-purple-800">Amazon Summer Internship</h3>
+          <p class="text-gray-700">Stipend: ₹30,000 | Duration: 6 months</p>
+        </div>
+        <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-purple-800">Google STEP Program</h3>
+          <p class="text-gray-700">Stipend: ₹50,000 | Duration: 3 months</p>
+        </div>
+        <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-purple-800">Flipkart Grid Challenge</h3>
+          <p class="text-gray-700">Stipend: ₹25,000 | Duration: 2 months</p>
+        </div>
+        <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-purple-800">ISRO YUVIKA</h3>
+          <p class="text-gray-700">Young Scientist Program</p>
+        </div>
+        <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-purple-800">NITI Aayog Internship</h3>
+          <p class="text-gray-700">For policy, planning, and research</p>
+        </div>
+        <div class="bg-purple-50 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-purple-800">DRDO Research Internship</h3>
+          <p class="text-gray-700">R&D in defence technologies</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+    </div>
+
+    <div class="mt-16 w-full max-w-4xl text-black">
+      <h2 class="text-2xl font-semibold mb-4 text-white">🏆 Top Referrers</h2>
+      <div class="bg-white rounded-lg shadow-lg p-4">
+      <ul id="leaderboardList" class="divide-y"></ul>
+
+<script>
+  fetch("https://your-backend-name.onrender.com/api/leaderboard")
+    .then(res => res.json())
+    .then(data => {
+      const ul = document.getElementById("leaderboardList");
+      data.forEach((user, index) => {
+        const li = document.createElement("li");
+        li.className = "py-2";
+        li.textContent = `${index + 1}. ${user.name} - ${user.referrals} referrals`;
+        ul.appendChild(li);
+      });
+    });
+</script>
+
+        <div class="text-right mt-2">
+          <a href="/leaderboard" class="text-sm text-blue-600 hover:underline">See Full Leaderboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+
